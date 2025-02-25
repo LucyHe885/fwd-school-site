@@ -1,0 +1,19 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "fwd-blocks/aos-block",
+	"version": "0.1.0",
+	"title": "AOS Block",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "a custom of adds AOS animation block.",
+	"example": {},
+	"supports": {
+		"html": false
+	},
+	"textdomain": "aos-block",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js"
+}
