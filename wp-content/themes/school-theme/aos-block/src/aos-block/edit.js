@@ -1,38 +1,32 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n'; 
+import { useBlockProps, InspectorControls, PanelBody, SelectControl, InnerBlocks } from '@wordpress/block-editor';
 
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
-import { useBlockProps } from '@wordpress/block-editor';
+const Edit = ({ attributes, setAttributes }) => {
+    const { animationType = 'fade-up' } = attributes;
+	
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody title={__('Animation Settings', 'fwd-blocks')}>
+                    <SelectControl
+                        label={__('Animation Type', 'fwd-blocks')}
+                        value={animationType}
+                        options={[
+                            { label: __('Fade Up', 'fwd-blocks'), value: 'fade-up' },
+                            { label: __('Fade Down', 'fwd-blocks'), value: 'fade-down' },
+                            { label: __('Fade Left', 'fwd-blocks'), value: 'fade-left' },
+                            { label: __('Fade Right', 'fwd-blocks'), value: 'fade-right' },
+                        ]}
+                        onChange={(value) => setAttributes({ animationType: value })}
+                    />
+                </PanelBody>
+            </InspectorControls>
 
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
-import './editor.scss';
+            <div {...useBlockProps()} data-aos={animationType}>
+                <InnerBlocks />
+            </div>
+        </>
+    );
+};
 
-/**
- * The edit function describes the structure of your block in the context of the
- * editor. This represents what the editor will render when the block is used.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
- *
- * @return {Element} Element to render.
- */
-export default function Edit() {
-	return (
-		<p { ...useBlockProps() }>
-			{ __( 'AOS Block – hello from the editor!', 'aos-block' ) }
-		</p>
-	);
-}
+export default Edit;
