@@ -58,36 +58,32 @@ function enqueue_lightgallery_scripts() {
 add_action('wp_enqueue_scripts', 'enqueue_lightgallery_scripts');
 
 
-function display_staff_members() {
-    ob_start();
-
-    $args = array(
+function staff_list_shortcode() {
+    $query = new WP_Query( array(
         'post_type'      => 'staff',
-        'posts_per_page' => -1,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-    );
+        'posts_per_page' => -1
+    ));
 
-    $staff_query = new WP_Query($args);
-
-    if ($staff_query->have_posts()) :
-        echo '<div class="staff-list">';
-        while ($staff_query->have_posts()) : $staff_query->the_post();
-            echo '<div class="staff-member">';
-            echo '<h2>' . get_the_title() . '</h2>';
-            echo '<div class="staff-category">' . get_the_term_list(get_the_ID(), 'staff_category', '', ', ') . '</div>';
-            echo '<div class="staff-content">' . get_the_excerpt() . '</div>';
-            echo '</div>';
-        endwhile;
-        echo '</div>';
+    if ($query->have_posts()) {
+        $output = '<div class="staff-list">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            $output .= '<div class="staff-member">';
+            if ( has_post_thumbnail() ) {
+                $output .= '<div class="staff-image">' . get_the_post_thumbnail( get_the_ID(), 'medium' ) . '</div>';
+            }
+            $output .= '<h3>' . get_the_title() . '</h3>';
+            $output .= '<div class="staff-content">' . get_the_content() . '</div>';
+            $output .= '</div>';
+        }
         wp_reset_postdata();
-    else :
-        echo '<p>No staff members found.</p>';
-    endif;
-
-    return ob_get_clean();
+        $output .= '</div>';
+        return $output;
+    } else {
+        return '<p>No staff members found.</p>';
+    }
 }
-add_shortcode('staff_members', 'display_staff_members');
+add_shortcode('staff_list', 'staff_list_shortcode');
 
 
 
@@ -98,3 +94,5 @@ require get_theme_file_path() . '/aos-block/aos-block.php';
 * Custom Post Types & Custom Taxonomies
 */
 require get_template_directory() . '/inc/post-types-taxonomies.php';
+
+
