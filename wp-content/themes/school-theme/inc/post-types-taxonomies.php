@@ -111,50 +111,7 @@ function school_register_staff_taxonomy() {
         ),
     );
 
-    register_taxonomy('staff-category',  array( 'staff' ), $args);
-
-    //Featured
-function school_register_featured_taxonomy() {
-    $labels = array(
-        'name'                  => _x( 'Featured', 'taxonomy general name', 'school-theme' ),
-        'singular_name'         => _x( 'Featured', 'taxonomy singular name', 'school-theme' ),
-        'search_items'          => __( 'Search Featured', 'school-theme' ),
-        'all_items'             => __( 'All Featured', 'school-theme' ),
-        'parent_item'           => __( 'Parent Featured', 'school-theme' ),
-        'parent_item_colon'     => __( 'Parent Featured:', 'school-theme' ),
-        'edit_item'             => __( 'Edit Featured', 'school-theme' ),
-        'view_item'             => __( 'View Featured', 'school-theme' ),
-        'update_item'           => __( 'Update Featured', 'school-theme' ),
-        'add_new_item'          => __( 'Add New Featured', 'school-theme' ),
-        'new_item_name'         => __( 'New Work Featured', 'school-theme' ),
-        'menu_name'             => __( 'Featured', 'school-theme' ),
-        'not_found'             => __( 'No featured found.', 'school-theme' ),
-        'no_terms'              => __( 'No featured', 'school-theme' ),
-        'items_list_navigation' => __( 'Featured list navigation', 'school-theme' ),
-        'items_list'            => __( 'Featured list', 'school-theme' ),
-        'item_link'             => __( 'Featured Link', 'school-theme' ),
-        'item_link_description' => __( 'A link to a featured.', 'school-theme' ),
-    );
-
-    $args = array(
-        'hierarchical'      => true, 
-        'labels'            => $labels,
-        'show_ui'           => true,
-        'show_admin_column' => true,
-        'show_in_rest'      => true,
-        'query_var'         => true,
-        'rewrite'           => array( 'slug' => 'featured' ),
-        'capabilities'      => array(
-            'manage_terms' => 'do_not_allow', 
-            'edit_terms'   => 'do_not_allow', 
-            'delete_terms' => 'do_not_allow', 
-            'assign_terms' => 'edit_posts',    
-        ),
-    );
-
-    register_taxonomy( 'school-featured', array( 'staff' ), $args );
-}
-
-
+    register_taxonomy('staff_category',  array( 'staff' ), $args);
 }
 add_action('init', 'school_register_staff_taxonomy');
+

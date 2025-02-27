@@ -75,7 +75,7 @@ function display_staff_members() {
         while ($staff_query->have_posts()) : $staff_query->the_post();
             echo '<div class="staff-member">';
             echo '<h2>' . get_the_title() . '</h2>';
-            echo '<div class="staff-category">' . get_the_term_list(get_the_ID(), 'staff-category', '', ', ') . '</div>';
+            echo '<div class="staff-category">' . get_the_term_list(get_the_ID(), 'staff_category', '', ', ') . '</div>';
             echo '<div class="staff-content">' . get_the_excerpt() . '</div>';
             echo '</div>';
         endwhile;
