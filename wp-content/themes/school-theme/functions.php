@@ -133,45 +133,6 @@ function custom_image_size_names($sizes) {
 add_filter('image_size_names_choose', 'custom_image_size_names');
 
 
-//shortcode single student
-
-function single_student_shortcode($atts) {
-    if (!is_singular('student')) {
-        return '<p>This shortcode can only be used on single student pages.</p>';
-    }
-
-    ob_start(); 
-
-    if (have_posts()) :
-        while (have_posts()) : the_post();
-            ?>
-            <div class="single-student">
-                <h1><?php the_title(); ?></h1>
-                <div class="student-image"><?php the_post_thumbnail('student-large'); ?></div>
-                <div class="student-content"><?php the_content(); ?></div>
-                <div class="student-categories">
-                    <strong>Speciality:</strong>
-                    <?php
-                    $terms = get_the_terms(get_the_ID(), 'student_category');
-                    if (!empty($terms)) {
-                        foreach ($terms as $term) {
-                            echo '<a href="' . get_term_link($term) . '">' . esc_html($term->name) . '</a> ';
-                        }
-                    } else {
-                        echo 'No category assigned';
-                    }
-                    ?>
-                </div>
-            </div>
-            <?php
-        endwhile;
-        wp_reset_postdata();
-    endif;
-
-    return ob_get_clean(); 
-}
-add_shortcode('single_student', 'single_student_shortcode');
-
 
 //load our custom block
 require get_theme_file_path() . '/aos-block/aos-block.php';
@@ -182,3 +143,23 @@ require get_theme_file_path() . '/aos-block/aos-block.php';
 require get_template_directory() . '/inc/post-types-taxonomies.php';
 
 
+// function enqueue_aos_assets() {
+//     wp_enqueue_style('aos-css', 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css');
+//     wp_enqueue_script('aos-js', 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js', array(), null, true);
+//     wp_add_inline_script('aos-js', 'AOS.init();');
+// }
+// add_action('wp_enqueue_scripts', 'enqueue_aos_assets');
+
+// function enqueue_custom_scripts() {
+
+//     wp_enqueue_script('aos-js', get_template_directory_uri() . '/node_modules/aos/dist/aos.js', array(), '2.3.4', true);
+
+ 
+//     wp_enqueue_script('custom-scripts', get_template_directory_uri() . '/scripts.js', array('aos-js'), null, true);
+// }
+// add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
+
+// function register_custom_blocks() {
+//     register_block_type(__DIR__ . '/fwd-blocks-animate-block');
+// }
+// add_action('init', 'register_custom_blocks');

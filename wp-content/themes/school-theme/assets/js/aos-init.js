@@ -1,7 +1,8 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     AOS.init({
         duration: 1000, 
-        once: true, 
         offset: 120, 
+        once: false,
+        mirror: true, 
     });
 });
