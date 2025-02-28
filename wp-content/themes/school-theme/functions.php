@@ -133,6 +133,46 @@ function custom_image_size_names($sizes) {
 add_filter('image_size_names_choose', 'custom_image_size_names');
 
 
+//shortcode single student
+
+function single_student_shortcode($atts) {
+    if (!is_singular('student')) {
+        return '<p>This shortcode can only be used on single student pages.</p>';
+    }
+
+    ob_start(); 
+
+    if (have_posts()) :
+        while (have_posts()) : the_post();
+            ?>
+            <div class="single-student">
+                <h1><?php the_title(); ?></h1>
+                <div class="student-image"><?php the_post_thumbnail('student-large'); ?></div>
+                <div class="student-content"><?php the_content(); ?></div>
+                <div class="student-categories">
+                    <strong>Speciality:</strong>
+                    <?php
+                    $terms = get_the_terms(get_the_ID(), 'student_category');
+                    if (!empty($terms)) {
+                        foreach ($terms as $term) {
+                            echo '<a href="' . get_term_link($term) . '">' . esc_html($term->name) . '</a> ';
+                        }
+                    } else {
+                        echo 'No category assigned';
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php
+        endwhile;
+        wp_reset_postdata();
+    endif;
+
+    return ob_get_clean(); 
+}
+add_shortcode('single_student', 'single_student_shortcode');
+
+
 //load our custom block
 require get_theme_file_path() . '/aos-block/aos-block.php';
 
