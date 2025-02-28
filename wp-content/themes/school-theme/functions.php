@@ -143,23 +143,4 @@ require get_theme_file_path() . '/aos-block/aos-block.php';
 require get_template_directory() . '/inc/post-types-taxonomies.php';
 
 
-// function enqueue_aos_assets() {
-//     wp_enqueue_style('aos-css', 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css');
-//     wp_enqueue_script('aos-js', 'https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js', array(), null, true);
-//     wp_add_inline_script('aos-js', 'AOS.init();');
-// }
-// add_action('wp_enqueue_scripts', 'enqueue_aos_assets');
 
-// function enqueue_custom_scripts() {
-
-//     wp_enqueue_script('aos-js', get_template_directory_uri() . '/node_modules/aos/dist/aos.js', array(), '2.3.4', true);
-
- 
-//     wp_enqueue_script('custom-scripts', get_template_directory_uri() . '/scripts.js', array('aos-js'), null, true);
-// }
-// add_action('wp_enqueue_scripts', 'enqueue_custom_scripts');
-
-// function register_custom_blocks() {
-//     register_block_type(__DIR__ . '/fwd-blocks-animate-block');
-// }
-// add_action('init', 'register_custom_blocks');
