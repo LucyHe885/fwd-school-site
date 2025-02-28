@@ -15,6 +15,7 @@ function school_enqueues() {
         '12.1.0'
     );
 
+    //animate
     wp_enqueue_style(
         'aos-css',
         'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css',
@@ -40,24 +41,54 @@ function school_enqueues() {
 }
 add_action('wp_enqueue_scripts', 'school_enqueues');
 
-
+//lightgallery
 function enqueue_lightgallery_scripts() {
     if (is_front_page()) { 
         // lightGallery CSS
-        wp_enqueue_style('lightgallery-css', 'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css', array(), '2.8.2');
+        wp_enqueue_style(
+            'lightgallery-css', 
+            'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/css/lightgallery-bundle.min.css', 
+            array(), 
+            '2.8.2'
+        );
 
         // lightGallery JS 
-        wp_enqueue_script('lightgallery-js', 'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/lightgallery.umd.min.js', array('jquery'), '2.8.2', true);
+        wp_enqueue_script(
+            'lightgallery-js', 
+            'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/lightgallery.umd.min.js', 
+            array('jquery'), 
+            '2.8.2', 
+            true
+        );
 
-        wp_enqueue_script('lg-thumbnail', 'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.umd.min.js', array('lightgallery-js'), '2.8.2', true);
-        wp_enqueue_script('lg-zoom', 'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/zoom/lg-zoom.umd.min.js', array('lightgallery-js'), '2.8.2', true);
+        wp_enqueue_script(
+            'lg-thumbnail', 
+            'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/thumbnail/lg-thumbnail.umd.min.js', 
+            array('lightgallery-js'), 
+            '2.8.2', 
+            true
+        );
 
-        wp_enqueue_script('lightgallery-init', get_template_directory_uri() . '/assets/js/lightgallery-init.js', array('lightgallery-js', 'lg-thumbnail', 'lg-zoom'), '1.0.0', true);
+        wp_enqueue_script(
+            'lg-zoom', 
+            'https://cdn.jsdelivr.net/npm/lightgallery@2.8.2/plugins/zoom/lg-zoom.umd.min.js', 
+            array('lightgallery-js'), 
+            '2.8.2', 
+            true
+        );
+
+        wp_enqueue_script(
+            'lightgallery-init', 
+            get_template_directory_uri() . '/assets/js/lightgallery-init.js', 
+            array('lightgallery-js', 'lg-thumbnail', 'lg-zoom'), 
+            '1.0.0', 
+            true
+        );
     }
 }
 add_action('wp_enqueue_scripts', 'enqueue_lightgallery_scripts');
 
-
+//staff shortcode
 function staff_list_shortcode() {
     $query = new WP_Query( array(
         'post_type'      => 'staff',
@@ -85,6 +116,21 @@ function staff_list_shortcode() {
 }
 add_shortcode('staff_list', 'staff_list_shortcode');
 
+
+//image sise
+function custom_theme_setup() {
+    add_image_size('student-thumbnail', 300, 300, true); 
+    add_image_size('student-large', 600, 600, true); 
+}
+add_action('after_setup_theme', 'custom_theme_setup');
+
+function custom_image_size_names($sizes) {
+    return array_merge($sizes, array(
+        'student-thumbnail' => __('Student Thumbnail'),
+        'student-large' => __('Student Large'),
+    ));
+}
+add_filter('image_size_names_choose', 'custom_image_size_names');
 
 
 //load our custom block

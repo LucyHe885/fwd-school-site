@@ -88,12 +88,63 @@ function school_register_staff_taxonomy() {
 }
 add_action('init', 'school_register_staff_taxonomy');
 
+//student custom post type
+function create_student_post_type() {
+    register_post_type('student',
+        array(
+            'labels' => array(
+                'name' => __('Students'),
+                'singular_name' => __('Student'),
+                'add_new' => __('Add New Student'),
+                'add_new_item' => __('Add New Student'),
+                'edit_item' => __('Edit Student'),
+                'new_item' => __('New Student'),
+                'view_item' => __('View Student'),
+                'search_items' => __('Search Students'),
+                'not_found' => __('No students found'),
+                'not_found_in_trash' => __('No students found in Trash')
+            ),
+            'public' => true,
+            'has_archive' => true,
+            'supports' => array('title', 'editor', 'thumbnail'), 
+            'show_in_rest' => true,
+            'template' => array( 
+                array('core/paragraph', array(
+                    'placeholder' => 'Add a short biography here...',
+                )),
+                array('core/button', array(
+                    'text' => 'View Portfolio',
+                    'url' => '#',
+                )),
+            ),
+            'template_lock' => 'all', 
+        )
+    );
+}
+add_action('init', 'create_student_post_type');
 
-// Ensure Taxonomy Capabilities Are Enforced
-// function disable_staff_taxonomy_editing() {
-//     global $pagenow;
-//     if ( in_array( $pagenow, array( 'edit-tags.php', 'term.php' ) ) && isset($_GET['taxonomy']) && $_GET['taxonomy'] == 'staff_category' ) {
-//         wp_die( __( 'You do not have permission to manage staff categories.', 'school-theme' ) );
-//     }
-// }
-// add_action( 'admin_init', 'disable_staff_taxonomy_editing' );
+
+function change_student_title_placeholder($title) {
+    $screen = get_current_screen();
+    if ($screen->post_type == 'student') {
+        $title = 'Add student name';
+    }
+    return $title;
+}
+add_filter('enter_title_here', 'change_student_title_placeholder');
+
+// student taxonomy
+function create_student_taxonomy() {
+    register_taxonomy(
+        'student_category', 
+        'student',
+        array(
+            'label' => __('Student Categories'),
+            'rewrite' => array('slug' => 'student-category'),
+            'hierarchical' => true, 
+            'show_in_rest' => true, 
+        )
+    );
+}
+add_action('init', 'create_student_taxonomy');
+

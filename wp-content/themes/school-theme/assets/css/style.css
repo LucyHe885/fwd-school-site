@@ -1,0 +1,13 @@
+
+.wp-block-navigation {
+    background-color: #0057a4 !important; 
+}
+
+.wp-block-navigation__submenu-container {
+    background-color: #0057a4 !important; 
+}
+
+.wp-block-navigation__submenu-container a {
+    color: white !important;
+}
+
